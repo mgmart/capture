@@ -12,6 +12,7 @@
 		749CBBA923AA17F200686EDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 749CBBA823AA17F200686EDD /* Assets.xcassets */; };
 		749CBBAC23AA17F200686EDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 749CBBAA23AA17F200686EDD /* Main.storyboard */; };
 		749CBBB823AA17F200686EDD /* captureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749CBBB723AA17F200686EDD /* captureTests.swift */; };
+		749CBBD723AA45F400686EDD /* RouteHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749CBBD623AA45F400686EDD /* RouteHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +25,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		749CBBD523AA406000686EDD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		749CBBA123AA17EF00686EDD /* capture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = capture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		749CBBA423AA17EF00686EDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +49,7 @@
 		749CBBB323AA17F200686EDD /* captureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = captureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		749CBBB723AA17F200686EDD /* captureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = captureTests.swift; sourceTree = "<group>"; };
 		749CBBB923AA17F200686EDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		749CBBD623AA45F400686EDD /* RouteHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +73,11 @@
 		749CBB9823AA17EF00686EDD = {
 			isa = PBXGroup;
 			children = (
+				749CBBD623AA45F400686EDD /* RouteHandler.swift */,
 				749CBBA323AA17EF00686EDD /* capture */,
 				749CBBB623AA17F200686EDD /* captureTests */,
 				749CBBA223AA17EF00686EDD /* Products */,
+				749CBBD223AA406000686EDD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,6 +112,13 @@
 			path = captureTests;
 			sourceTree = "<group>";
 		};
+		749CBBD223AA406000686EDD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -105,6 +129,7 @@
 				749CBB9D23AA17EF00686EDD /* Sources */,
 				749CBB9E23AA17EF00686EDD /* Frameworks */,
 				749CBB9F23AA17EF00686EDD /* Resources */,
+				749CBBD523AA406000686EDD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				749CBBA723AA17EF00686EDD /* ViewController.swift in Sources */,
+				749CBBD723AA45F400686EDD /* RouteHandler.swift in Sources */,
 				749CBBA523AA17EF00686EDD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,7 +377,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9VWR9JYXC6;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = capture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -371,7 +397,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9VWR9JYXC6;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = capture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
