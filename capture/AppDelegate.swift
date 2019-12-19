@@ -39,8 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
           }
         }
-        capture = "\"" + capture + "\""
-        print(shell(command: "/usr/local/bin/emacsclient", arguments: ["-c", "-n",
+        // Execute emacsclient and log result
+        os_log("%{public}@", log:customLog, type: .default, shell(command: "/usr/local/bin/emacsclient", arguments: ["-c", "-n",
             "-F", "((title . \"capture\") (left . (+ 550)) (top . (+ 400)) (width . 110) (height . 12))",
           capture])!)
         
@@ -53,7 +53,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if errorDict != nil { print(errorDict!) }
       }
     }
+    // Log received URL
     os_log("Got: %{public}@", log: customLog, type: .default, url.absoluteString)
+    // Terminate Application afterwards
     NSApplication.shared.terminate(self)
   }
   
