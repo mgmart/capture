@@ -1,0 +1,68 @@
+* capture
+
+** Objective
+
+   tbd
+
+** Usage
+
+*** Installation
+    
+    tbd
+
+*** Browserscript
+
+**** Using capture
+
+     #+BEGIN_SRC js
+     javascript:location.href='capture://capture?template=l
+     &url='+encodeURIComponent(window.location.href)+'
+     &title='+encodeURIComponent(document.title)+'
+     &body='+encodeURIComponent(window.getSelection())+';
+     #+END_SRC
+
+     
+     To use Homebrew's Emacs' ~org-protocol~ directly:
+**** Using org-protocol
+
+     #+BEGIN_SRC js
+     javascript:location.href='org-protocol://capture?template=l
+     &url='+encodeURIComponent(window.location.href)+'
+     &title='+encodeURIComponent(document.title)+'
+     &body='+encodeURIComponent(window.getSelection())';
+     #+END_SRC
+
+
+*** Additional emacs config
+
+**** Make capture window disappear when done
+    #+BEGIN_SRC emacs-lisp
+ ;;;
+ ;; Capture floating frame
+ ;;
+ ;; taken from: http://www.windley.com/archives/2010/12/capture_mode_and_emacs.shtml
+ ;;;
+
+ (defadvice org-capture-finalize
+     (after delete-capture-frame activate)
+   "Advise capture-finalize to close the frame"
+   (if (equal "capture" (frame-parameter nil 'title))
+       (delete-frame)))
+
+ (defadvice org-capture-destroy
+     (after delete-capture-frame activate)
+   "Advise capture-destroy to close the frame"
+   (if (equal "capture" (frame-parameter nil 'title)
+       (delete-frame))))
+
+ ;; make the frame contain a single window. by default org-capture
+ ;; splits the window.
+ (add-hook 'org-capture-mode-hook
+           'delete-other-windows)
+
+ (defadvice org-switch-to-buffer-other-window
+   (after supress-window-splitting activate)
+   "Delete the extra window if we're in a capture frame"
+   (if (equal "capture" (frame-parameter nil 'title))
+       (delete-other-windows)))
+    #+END_SRC
