@@ -9,7 +9,6 @@
 import Cocoa
 import OSLog
 
-@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   
   func applicationWillFinishLaunching(_ notification: Notification) {
