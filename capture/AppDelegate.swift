@@ -14,12 +14,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
   func applicationWillFinishLaunching(_ notification: Notification) {
     // register for getURL events
-    NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleEvent(_:with:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+    NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleEvent(_:with:)),
+                                                 forEventClass: AEEventClass(kInternetEventClass),
+                                                 andEventID: AEEventID(kAEGetURL))
   }
   
   func applicationWillTerminate(_ aNotification: Notification) {
     // deregister from getURL events
-    NSAppleEventManager.shared().removeEventHandler(forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+    NSAppleEventManager.shared().removeEventHandler(forEventClass: AEEventClass(kInternetEventClass),
+                                                    andEventID: AEEventID(kAEGetURL))
   }
   
   @objc private func handleEvent(_ event: NSAppleEventDescriptor, with replyEvent: NSAppleEventDescriptor) {
@@ -40,17 +43,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
           }
         }
         // Execute emacsclient and log result
-        os_log("%{public}@", log:customLog, type: .default, shell(command: "/usr/local/bin/emacsclient", arguments: ["-c", "-n",
-            "-F", "((title . \"capture\") (left . (+ 550)) (top . (+ 400)) (width . 110) (height . 12))",
-          capture])!)
-        
-        
+        os_log("%{public}@", log:customLog, type: .default,
+               shell(command: "/usr/local/bin/emacsclient", arguments: ["-c", "-n", "-F",
+                                                                        "((title . \"capture\") (left . (+ 550)) (top . (+ 400)) (width . 110) (height . 12))",
+                                                                        capture])!)
+
         // Bring emacs to the front
-        // https://stackoverflow.com/questions/43449190/swift-xcode-use-osascript-in-mac-app
-        let script = NSAppleScript(source: "activate application \"Emacs\"")!
-        var errorDict : NSDictionary?
-        script.executeAndReturnError(&errorDict)
-        if errorDict != nil { print(errorDict!) }
+        _ = shell(command: "/usr/local/bin/emacsclient", arguments: ["-n", "-e",
+                                                                     "(select-frame-set-input-focus (selected-frame))"])
       }
     }
     // Log received URL
