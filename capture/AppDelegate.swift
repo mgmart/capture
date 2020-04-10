@@ -27,9 +27,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   @objc private func handleEvent(_ event: NSAppleEventDescriptor, with replyEvent: NSAppleEventDescriptor) {
     let customLog = OSLog(subsystem: "de.schnuddelhuddel.capture", category: "Category")
     guard let urlString = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue else { return }
-    guard let url = URL(string: urlString) else { return }
+    let newString = urlString.replacingOccurrences(of: "%20%26%20", with: "%20+%20")
+    guard let url = URL(string: newString) else { return }
     var capture = "org-protocol://capture?"
     var ampersand = ""
+
     if let components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
       if components.scheme == "capture" {
         
