@@ -43,39 +43,73 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
           }
         }
+  //      capture = capture.replacingOccurrences(of: "&", with: "+")
         // Execute emacsclient and log result
         os_log("%{public}@", log:customLog, type: .default,
                shell(command: "/usr/local/bin/emacsclient", arguments: ["-c", "-n", "-F",
-                                                                        "((title . \"capture\") (left . (+ 550)) (top . (+ 400)) (width . 110) (height . 12))",
+                                                                        "((title . \"capture\") (left . (+ 550)) (top . (+ 400)) (width . 110) (height . 12))", "-e", "(select-frame-set-input-focus (selected-frame))" ,
                                                                         capture])!)
 
         // Bring emacs to the front
-        _ = shell(command: "/usr/local/bin/emacsclient", arguments: ["-n", "-e",
-                                                                     "(select-frame-set-input-focus (selected-frame))"])
+        os_log("%{public}@", log:customLog, type: .default,
+               shell(command: "/usr/local/bin/emacsclient", arguments: ["-e",
+                                                                        "(select-frame-set-input-focus (selected-frame))"])!)
+
+        // switchBack()
+        
       }
     }
+//    switchBack()
     // Log received URL
-    os_log("Got: %{public}@", log: customLog, type: .default, url.absoluteString)
+    os_log("Capture: %{public}@", log: customLog, type: .default, capture)
+    os_log("URL: %{public}@", log: customLog, type: .default, url.absoluteString)
     // Terminate Application afterwards
     NSApplication.shared.terminate(self)
   }
   
+  /// Calls external command line program
+  /// - Parameters:
+  ///   - command: name of external program
+  ///   - arguments: arguments to pass to program
+  /// - Returns: output of external program after execution
   private func shell(command: String, arguments: [String]) -> String?
   {
     let task = Process()
     task.launchPath = command
     task.arguments = arguments
-//    for txt in arguments {
-//      print("--" + txt + "--")
-//    }
 
     let pipe = Pipe()
     task.standardOutput = pipe
     task.launch()
-    
+    // TODO: Bring calling application back to foreground
+    // task.waitUntilExit()
+    // switchback()
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
     let output = String(data: data, encoding: String.Encoding.utf8)
     
     return output
+  }
+
+  
+  /// Causes switching to the calling App by invoking
+  /// CMD-TAB vie AppleScript
+  private func switchBack() {
+    let script = """
+tell application "System Events"
+  key down command
+  keystroke tab
+  key code 123
+  key up command
+end tell
+"""
+    
+    if let scriptObject = NSAppleScript(source: script) {
+      var errorDict: NSDictionary? = nil
+      _ = scriptObject.executeAndReturnError(&errorDict)
+      
+      if let error = errorDict {
+        print(error)
+      }
+    }
   }
 }
