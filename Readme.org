@@ -1,19 +1,32 @@
-* capture
+* Capture
+
+<div style="display:table-cell; vertical-align:middle; text-align:center">
+<img src="Capture.png">
+</div>
 
 ** Objective
 
-   tbd
+   Capture is another wrapper to use org-protocol an a MacOs machine. There are
+   plenty already existing and depending on the Emacs port org-protocol support ist
+   often built in.
+
+   Capture does create only a small Emacs frame, so must of the current context
+   is still visisble to the user whilst capturing. For this all existing Emacs
+   frame should be minimised to trhe Dock.
 
 ** Usage
 
 *** Installation
     
-    tbd
+    As usual the application must be present in the Application
+    Folder. Additionally the user is asked to allow Capture to call System
+    Events by AppleScript. This is necessary because the Focus should be on
+    calling application after capture.
 
 *** Browserscript
-
+    
 **** Using capture
-
+     To use Capture to capture a link to the current page
      #+BEGIN_SRC js
      javascript:location.href='capture://capture?template=l
      &url='+encodeURIComponent(window.location.href)+'
@@ -22,7 +35,7 @@
      #+END_SRC
 
      
-     To use Homebrew's Emacs' ~org-protocol~ directly:
+     To use e.g. Homebrew's Emacs' ~org-protocol~ directly:
 **** Using org-protocol
 
      #+BEGIN_SRC js
@@ -66,3 +79,10 @@
    (if (equal "capture" (frame-parameter nil 'title))
        (delete-other-windows)))
     #+END_SRC
+
+    #+RESULTS:
+    : org-switch-to-buffer-other-window
+
+** The Unicorn
+
+   The Unicorn is courtesy of [[https://pixabay.com/de/users/lohrelei-1422286/][Lohrelei]]
