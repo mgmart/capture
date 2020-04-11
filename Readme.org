@@ -1,8 +1,8 @@
-* Capture
-
 <div style="display:table-cell; vertical-align:middle; text-align:center">
 <img src="Capture.png">
 </div>
+
+* Capture
 
 ** Objective
 
