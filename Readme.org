@@ -1,9 +1,5 @@
-<div style="display:table-cell; vertical-align:middle; text-align:center">
-<img src="Capture.png">
-</div>
-
 * Capture
-
+<p align="center"><img src="capture.png" /></p>
 ** Objective
 
    Capture is another wrapper to use org-protocol an a MacOs machine. There are
