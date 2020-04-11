@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     guard let url = URL(string: newString) else { return }
     var capture = "org-protocol://capture?"
     var ampersand = ""
-
+    
     if let components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
       if components.scheme == "capture" {
         
@@ -43,23 +43,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
           }
         }
-  //      capture = capture.replacingOccurrences(of: "&", with: "+")
+        
+        // Give emacs the focus
+        // works best if all existing emacs frames are minimised
+        switchToEmacs()
+        
         // Execute emacsclient and log result
         os_log("%{public}@", log:customLog, type: .default,
-               shell(command: "/usr/local/bin/emacsclient", arguments: ["-c", "-n", "-F",
-                                                                        "((title . \"capture\") (left . (+ 550)) (top . (+ 400)) (width . 110) (height . 12))", "-e", "(select-frame-set-input-focus (selected-frame))" ,
+               shell(command: "/usr/local/bin/emacsclient", arguments: ["-c", "-F",
+                                                                        "((title . \"capture\") (left . (+ 550)) (top . (+ 400)) (width . 110) (height . 12))",
                                                                         capture])!)
-
-        // Bring emacs to the front
-        os_log("%{public}@", log:customLog, type: .default,
-               shell(command: "/usr/local/bin/emacsclient", arguments: ["-e",
-                                                                        "(select-frame-set-input-focus (selected-frame))"])!)
-
-        // switchBack()
+        switchBack()
         
       }
     }
-//    switchBack()
     // Log received URL
     os_log("Capture: %{public}@", log: customLog, type: .default, capture)
     os_log("URL: %{public}@", log: customLog, type: .default, url.absoluteString)
@@ -77,19 +74,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let task = Process()
     task.launchPath = command
     task.arguments = arguments
-
+    
     let pipe = Pipe()
     task.standardOutput = pipe
     task.launch()
-    // TODO: Bring calling application back to foreground
-    // task.waitUntilExit()
-    // switchback()
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
     let output = String(data: data, encoding: String.Encoding.utf8)
     
     return output
   }
-
+  
   
   /// Causes switching to the calling App by invoking
   /// CMD-TAB vie AppleScript
@@ -98,10 +92,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 tell application "System Events"
   key down command
   keystroke tab
+  keystroke tab
   key code 123
   key up command
 end tell
 """
+    
+    // TODO: Is there a better way to wait?
+    sleep(1)
+    
+    if let scriptObject = NSAppleScript(source: script) {
+      var errorDict: NSDictionary? = nil
+      _ = scriptObject.executeAndReturnError(&errorDict)
+      
+      if let error = errorDict {
+        print(error)
+      }
+    }
+  }
+  
+  /// Activates Emacs to ensure that capture frame will be visible to the user
+  private func switchToEmacs() {
+    let script = """
+  tell application "Emacs"
+    activate
+  end tell
+  """
     
     if let scriptObject = NSAppleScript(source: script) {
       var errorDict: NSDictionary? = nil

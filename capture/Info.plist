@@ -45,5 +45,7 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>We do this only to be able to switch back to the calling application.</string>
 </dict>
 </plist>
