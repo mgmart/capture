@@ -2,13 +2,15 @@
  [[./Capture.png]]
 ** Objective
 
-   Capture is another wrapper to use org-protocol on a MacOS machine. There are
+   Capture is another wrapper to use org-protocol an a MacOs machine. There are
    plenty already existing and depending on the Emacs port org-protocol support ist
    often built in.
 
-   Capture does create only a small Emacs frame, so must of the current context
+   [[./screenshot.png]]
+
+   Capture does create only a small Emacs frame, so most of the current context
    is still visisble to the user whilst capturing. For this all existing Emacs
-   frame should be minimised to trhe Dock.
+   frame should be minimised to the Dock.
 
 ** Usage
 
